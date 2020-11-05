@@ -1,0 +1,44 @@
+<html>
+<body bgcolor=#FAF0E6>
+<font size="6"><font color="blue"><u>Creating Thread</u></font></font>
+<h2>There are two ways to create a thread:</h2>
+   <font size="5"> 
+    <t>--->By extending Thread class<br>
+    <t>--->By implementing Runnable interface.</font><br>
+<h3>EXAMPLES</h3> 
+<font size="5"><br>
+<font size="6" color="blue">1) Java Thread Example by extending Thread class</font><br>
+class Multi extends Thread <br>
+{ <br>
+  public void run()  <br>
+  {<br>
+   System.out.println("thread is running...");  <br>
+  }  <br>
+  public static void main(String args[])  <br>
+  {<br>
+   Multi t1=new Multi();  <br>
+   t1.start();  <br>
+  }  <br>
+}  <br><br>
+Output:<br>thread is running...<br><br>
+</font> 
+<font size="6" color="blue">2) Java Thread Example by implementing Runnable interface</font><br> 
+<font size="5">
+class Multi implements Runnable<br>
+{  <br>
+  public void run()<br>
+  {  <br>
+   System.out.println("thread is running...");  <br>
+  }  <br>
+  public static void main(String args[])<br>
+ {  <br>
+  Multi m1=new Multi();  <br>
+  Thread t1 =new Thread(m1);  <br>
+  t1.start(); <br> 
+ }<br>  
+} <br> 
+Output:<br>
+thread is running...
+</font>
+</body>
+</html>

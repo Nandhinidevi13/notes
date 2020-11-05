@@ -1,0 +1,164 @@
+<html>
+<body bgcolor=#FAF0E6>
+<font size="6" color="blue"> <center>Thread synchronization</center></font>
+<h1>Definition</h1>
+<font size="5">-->Synchronization in java is the capability to control the access of multiple threads to any shared resource.
+
+-->Java Synchronization is better option where we want to allow only one thread to access the shared resource.</font><br>
+
+<font size="5"><b>Types of Synchronization</b></br>
+There are two types of synchronization<br>
+--->Process Synchronization<br>
+--->Thread Synchronization<br>
+Here, we will discuss only thread synchronization.<br>
+
+<font color="blue"><b>Thread Synchronization</b></font><br>
+There are two types of thread synchronization mutual exclusive and inter-thread communication.<br>
+
+1.Mutual Exclusive<br>
+   *Synchronized method.<br>
+   *Synchronized block.<br>
+   *static synchronization.<br>
+2.Cooperation <b>(Inter-thread communication in java)</b></font><hr>
+<font color="blue" size="5"><b>Example without using Sysnchronization</b></font><br>
+<font size="5">Understanding the problem without Synchronization
+In this example, there is no synchronization, so output is inconsistent. Let's see the example:<br>
+
+class Table<br>
+{  <br>
+ void printTable(int n) //method not synchronized  <br>
+  {<br>
+   for(int i=1;i<=5;i++)<br>
+   {  <br>
+     System.out.println(n*i);  <br>
+     try<br>
+     {  <br>
+      Thread.sleep(400); <br> 
+     }<br>
+     catch(Exception e)<br>
+     {<br>
+      System.out.println(e);<br>
+     }  <br>
+   }  <br>
+  }<br>  
+} <br> 
+class MyThread1 extends Thread<br>
+{  <br>
+ Table t;  <br>
+ MyThread1(Table t)<br>
+ {  <br>
+ this.t=t;  <br>
+ }  <br>
+ public void run()<br>
+ {  <br>
+ t.printTable(5); <br> 
+ }  <br>
+}  <br>
+class MyThread2 extends Thread<br>
+{  <br>
+ Table t;  <br>
+ MyThread2(Table t)<br>
+ {  <br>
+  this.t=t;  <br>
+ }  <br>
+ public void run()<br>
+ {  <br>
+ t.printTable(100); <br> 
+ }  <br>
+}  <br>
+class TestSynchronization1<br>
+{  <br>
+ public static void main(String args[])<br>
+ {  <br>
+  Table obj = new Table();//only one object  <br>
+  MyThread1 t1=new MyThread1(obj);  <br>
+  MyThread2 t2=new MyThread2(obj);  <br>
+  t1.start();  <br>
+  t2.start(); <br> 
+ }  <br>
+}<br>  
+<font color="red">Output:</font><br>
+       5<br>
+       100<br>
+       10<br>
+       200<br>
+       15<br>
+       300<br>
+       20<br>
+       400<br>
+       25<br>
+       500<hr>
+<font color="blue"><b>example with Synchronization</b></font><br>
+<b>java synchronized method:</b><br>
+*If you declare any method as synchronized, it is known as synchronized method.<br>
+
+*Synchronized method is used to lock an object for any shared resource.<br>
+
+--->When a thread invokes a synchronized method, it automatically acquires the lock for that object and releases it when the thread completes its task.<br>
+  
+class Table<br>
+{  <br>
+ synchronized void printTable(int n) //synchronized method  <br>
+  {<br>
+   for(int i=1;i<=5;i++)<br>
+   {  <br>
+    System.out.println(n*i);  <br>
+    try<br>
+    {  <br>
+      Thread.sleep(400);  <br>
+     }<br>
+    catch(Exception e)<br>
+    {<br>
+     System.out.println(e);<br>
+    } <br> 
+   } <br> 
+  }  <br>
+}  <br>
+class MyThread1 extends Thread<br>
+{  <br>
+ Table t;  <br>
+ MyThread1(Table t)<br>
+ {  <br>
+  this.t=t;  <br>
+ }  <br>
+ public void run() <br>
+ {  <br>
+  t.printTable(5); <br> 
+ }  <br>
+}  <br>
+class MyThread2 extends Thread<br>
+{  <br>
+ Table t;<br>  
+ MyThread2(Table t)<br>
+ {  <br>
+  this.t=t;<br>  
+ }  <br>
+ public void run()<br>
+ {  <br>
+  t.printTable(100);  <br>
+ } <br> 
+}  <br>
+public class TestSynchronization2<br>
+{  <br>
+ public static void main(String args[])<br>
+ {  <br>
+  Table obj = new Table();//only one object  <br>
+  MyThread1 t1=new MyThread1(obj); <br> 
+  MyThread2 t2=new MyThread2(obj);  <br>
+  t1.start(); <br> 
+  t2.start(); <br> 
+ }  <br>
+}  <br>
+<font color="red">Output:</font><br>
+       5<br>
+       10<br>
+       15<br>
+       20<br>
+       25<br>
+       100<br>
+       200<br>
+       300<br>
+       400<br>
+       500</font><br>
+</body>
+</html>

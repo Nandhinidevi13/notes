@@ -1,0 +1,44 @@
+<html>
+<body bgcolor=#FAF0E6>
+<font size="6" color="blue">Priority of a Thread (Thread Priority):</font><br>
+<font size="5">**Each thread have a priority. Priorities are represented by a number between 1 and 10. In most cases, thread schedular schedules the threads according to their priority (known as preemptive scheduling). But it is not guaranteed because it depends on JVM specification that which scheduling it chooses.<br><br>
+3 constants defined in Thread class:<br>
+--->public static int MIN_PRIORITY<br>
+--->public static int NORM_PRIORITY<br>
+--->public static int MAX_PRIORITY</font><br><br>
+<font size="4">**Default priority of a thread is 5 (NORM_PRIORITY)<br>.**The value of MIN_PRIORITY is 1 and<br>**the value of MAX_PRIORITY is 10 </font><br><br>
+<font size="5"><font color="blue">example for thread priority<br></font>
+class TestMultiPriority1 extends Thread<br>
+{  <br>
+ public void run()<br>
+  {  <br>
+   System.out.println("running thread name is:"+Thread.currentThread().getName());  <br>
+   System.out.println("running thread priority is:"+Thread.currentThread().getPriority()); <br> 
+  }  <br>
+ public static void main(String args[])<br>
+  {  <br>
+  TestMultiPriority1 m1=new TestMultiPriority1();  <br>
+  TestMultiPriority1 m2=new TestMultiPriority1();<br>  
+  m1.setPriority(Thread.MIN_PRIORITY); <br> 
+  m2.setPriority(Thread.MAX_PRIORITY); <br> 
+  m1.start(); <br> 
+  m2.start(); <br> 
+  }  <br>
+}  <br>   
+<font color="red">Output:</font><br>
+       running thread name is:Thread-0<br>
+       running thread priority is:10<br>
+       running thread name is:Thread-1<br>
+       running thread priority is:1<br></font>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

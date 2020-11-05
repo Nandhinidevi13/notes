@@ -1,0 +1,46 @@
+<html>
+<body bgcolor="FAF0E6">
+<font size="5"><font color="blue"> <b>Sleep Method</b></font><br><br>
+The sleep() method of Thread class is used to sleep a thread for the specified amount of time.<br>
+
+<b>Syntax of sleep() method in java</b><br>
+The Thread class provides two methods for sleeping a thread:<br>
+--->public static void sleep(long miliseconds)throws InterruptedException<br>
+--->public static void sleep(long miliseconds, int nanos)throws InterruptedException<hr>
+<font color="blue">Example of sleep method in java</font><br><br>
+class TestSleepMethod1 extends Thread<br>
+{  <br>
+ public void run()<br>
+ {  <br>
+  for(int i=1;i<5;i++)<br>
+   {  <br>
+    try<br>
+    {  <br>
+    Thread.sleep(500);
+    }
+    catch(InterruptedException e)<br>
+    {<br>
+    System.out.println(e);<br>
+    } <br> 
+    System.out.println(i);  <br>
+  }<br>  
+ }<br>  
+ public static void main(String args[])<br>
+ {  <br>
+  TestSleepMethod1 t1=new TestSleepMethod1();<br>  
+  TestSleepMethod1 t2=new TestSleepMethod1();  <br>
+  t1.start();<br>  
+  t2.start();  <br>
+ } <br> 
+}  <br>
+<font color="red"><b>Output:</b></font><br>
+       1<br>
+       1<br>
+       2<br>
+       2<br>
+       3<br>
+       3<br>
+       4<br>
+       4<br></font>
+</body>
+</html>

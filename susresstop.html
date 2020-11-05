@@ -1,0 +1,159 @@
+<html>
+<body bgcolor=#FAF0E6>
+<font size="5"><font color="blue"><b>DESCRIPTIONS</b></font><br><br>
+<b>1.public void suspend()</b><br>
+
+**This method puts a thread in the suspended state and can be resumed using resume() method.<br><br>
+
+<b>2.public void stop()</b><br>
+
+**This method stops a thread completely.<br><br>
+
+<b>3.public void resume()</b><br>
+
+**This method resumes a thread, which was suspended using suspend() method.<br><br>
+<b>4.public void wait()</b><br>
+
+**Causes the current thread to wait until another thread invokes the notify().<br><br>
+
+<b>5.public void notify()</b><br>
+
+**Wakes up a single thread that is waiting on this object's monitor.<br><br>
+
+--->Be aware that the latest versions of Java has deprecated the usage of suspend( ), resume( ), and stop( ) methods and so you need to use available alternatives.<hr>
+<font color="blue"><b>Example:</b></font><br>
+
+class RunnableDemo implements Runnable <br>
+{<br>
+   public Thread t;<br>
+   private String threadName;<br>
+   boolean suspended = false;<br>
+   RunnableDemo( String name) <br>
+   {<br>
+      threadName = name;<br>
+      System.out.println("Creating " +  threadName );<br>
+   }<br>
+   public void run() <br>
+   {<br>
+      System.out.println("Running " +  threadName );<br>
+      try <br>
+      {<br>
+         for(int i = 10; i > 0; i--)<br>
+         {<br>
+            System.out.println("Thread: " + threadName + ", " + i);<br>
+            // Let the thread sleep for a while.<br>
+            Thread.sleep(300);<br>
+            synchronized(this)<br>
+             {<br>
+               while(suspended) <br>
+               {<br>
+                  wait();<br>
+               }<br>
+            }<br>
+         }<br>
+      } <br>
+      catch (InterruptedException e) <br>
+      {<br>
+         System.out.println("Thread " +  threadName + " interrupted.");<br>
+      }<br>
+      System.out.println("Thread " +  threadName + " exiting.");<br>
+      }<br>
+     public void start () <br>
+     {<br>
+      System.out.println("Starting " +  threadName );<br>
+      if (t == null)<br> 
+       {<br>
+         t = new Thread (this, threadName);<br>
+         t.start ();<br>
+       }<br>
+     }<br>
+   void suspend() <br>
+   {<br>
+      suspended = true;<br>
+   }<br>
+   synchronized void resume() <br>
+   {<br>
+      suspended = false;<br>
+      notify();<br>
+   }<br>
+}<br>
+
+public class TestThread <br>
+{<br>
+  public static void main(String args[]) <br>
+  {<br>
+      RunnableDemo R1 = new RunnableDemo( "Thread-1");<br>
+      R1.start();<br>
+      RunnableDemo R2 = new RunnableDemo( "Thread-2");<br>
+      R2.start();<br>
+      try <br>
+      {<br>
+         Thread.sleep(1000);<br>
+         R1.suspend();<br>
+         System.out.println("Suspending First Thread");<br>
+         Thread.sleep(1000);<br>
+         R1.resume();<br>
+         System.out.println("Resuming First Thread");<br>
+         
+         R2.suspend();<br>
+         System.out.println("Suspending thread Two");<br>
+         Thread.sleep(1000);<br>
+         R2.resume();<br>
+         System.out.println("Resuming thread Two");<br>
+      } <br>
+      catch (InterruptedException e) <br>
+      {<br>
+         System.out.println("Main thread Interrupted");<br>
+      }<br>
+      try<br> 
+      {<br>
+         System.out.println("Waiting for threads to finish.");<br>
+         R1.t.join();<br>
+         R2.t.join();<br>
+      } <br>
+      catch (InterruptedException e)<br>
+      {<br>
+         System.out.println("Main thread Interrupted");<br>
+      }<br>
+      System.out.println("Main thread exiting.");<br>
+   }<br>
+}<br><br>
+
+
+<font color="red"><b>Output:</b></font><br>
+Creating Thread-1<br>
+Starting Thread-1<br>
+Creating Thread-2<br>
+Starting Thread-2<br>
+Running Thread-1<br>
+Thread: Thread-1, 10<br>
+Running Thread-2<br>
+Thread: Thread-2, 10<br>
+Thread: Thread-1, 9<br>
+Thread: Thread-2, 9<br>
+Thread: Thread-1, 8<br>
+Thread: Thread-2, 8<br>
+Thread: Thread-1, 7<br>
+Thread: Thread-2, 7<br>
+Suspending First Thread<br>
+Thread: Thread-2, 6<br>
+Thread: Thread-2, 5<br>
+Thread: Thread-2, 4<br>
+Resuming First Thread<br>
+Suspending thread Two<br>
+Thread: Thread-1, 6<br>
+Thread: Thread-1, 5<br>
+Thread: Thread-1, 4<br>
+Thread: Thread-1, 3<br>
+Resuming thread Two<br>
+Thread: Thread-2, 3<br>
+Waiting for threads to finish.<br>
+Thread: Thread-1, 2  <br>
+Thread: Thread-2, 2  <br>
+Thread: Thread-1, 1  <br>
+Thread: Thread-2, 1<br>
+Thread Thread-1 exiting.<br>
+Thread Thread-2 exiting.<br>
+Main thread exiting.<br>
+</body>
+</html>
